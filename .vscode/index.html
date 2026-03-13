@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>AtmoSense</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+
+<body>
+
+<div class="header">
+<h1>🌍 AtmoSense</h1>
+<p>IoT + Machine Learning Dashboard</p>
+</div>
+
+<div class="container">
+
+<div class="card">
+<h2>MQ2 Gas</h2>
+<p id="mq2">--</p>
+</div>
+
+<div class="card">
+<h2>MQ7 CO</h2>
+<p id="mq7">--</p>
+</div>
+
+<div class="card">
+<h2>Temperature 🌡</h2>
+<p id="temp">--</p>
+</div>
+
+<div class="card">
+<h2>Humidity 💧</h2>
+<p id="humidity">--</p>
+</div>
+
+<div class="card prediction">
+<h2>Air Quality</h2>
+<p id="prediction">--</p>
+</div>
+
+</div>
+
+
+<div class="chart-container">
+
+<div class="chart-box">
+<h2>MQ2 Gas Trend</h2>
+<canvas id="mq2Chart"></canvas>
+</div>
+
+<div class="chart-box">
+<h2>MQ7 CO Trend</h2>
+<canvas id="mq7Chart"></canvas>
+</div>
+
+</div>
+
+<footer>
+Smart Air Quality Monitoring • ESP32 • ML
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>

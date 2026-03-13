@@ -6,7 +6,7 @@ const CHANNEL_ID="3298181"
 const READ_API="DY7BFO9BKZXB4IGN"
 
 // 🔹 Render ML API URL
-const ML_API="https://YOUR-RENDER-API.onrender.com"
+const ML_API="https://atmosense-ml-api.onrender.com"
 
 const mq2Chart=new Chart(
 document.getElementById("mq2Chart"),

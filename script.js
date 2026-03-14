@@ -2,12 +2,7 @@ let mq2Data=[]
 let mq7Data=[]
 let labels=[]
 
-const CHANNEL_ID="3298181"
-const READ_API="DY7BFO9BKZXB4IGN"
-
-// 🔹 Render ML API URL
-const ML_API="https://atmosense-ml-api.onrender.com"
-
+// Charts
 const mq2Chart=new Chart(
 document.getElementById("mq2Chart"),
 {
@@ -40,31 +35,31 @@ tension:0.4
 }
 })
 
-async function getData(){
+// Generate prediction locally
+function getPrediction(mq2,mq7){
 
-try{
+if(mq2<100 && mq7<50){
+return "Safe"
+}
+else if(mq2<200 && mq7<100){
+return "Moderate"
+}
+else{
+return "Danger"
+}
 
-// Fetch data from ThingSpeak
-let url=`https://api.thingspeak.com/channels/${CHANNEL_ID}/feeds/last.json?api_key=${READ_API}`
+}
 
-let response=await fetch(url)
+function getData(){
 
-let cloudData=await response.json()
+// Random sensor values
+let mq2=Math.floor(Math.random()*120)
+let mq7=Math.floor(Math.random()*60)
 
-// Generate random SAFE values for testing
-let mq2 = Math.floor(Math.random() * 80) + 10   // 10 - 90 (Safe range)
-let mq7 = Math.floor(Math.random() * 40) + 5    // 5 - 45 (Safe range)
-
-// Temporary values (until ESP32 sends these)
-let temp=Math.floor(Math.random()*10)+28
+let temp=Math.floor(Math.random()*8)+26
 let humidity=Math.floor(Math.random()*30)+40
 
-// Call ML API on Render
-let mlURL=`${ML_API}/predict/${mq2}/${mq7}/${temp}/${humidity}`
-
-let mlResponse=await fetch(mlURL)
-
-let mlData=await mlResponse.json()
+let prediction=getPrediction(mq2,mq7)
 
 // Update UI
 document.getElementById("mq2").innerText=mq2
@@ -73,21 +68,20 @@ document.getElementById("temp").innerText=temp+" °C"
 document.getElementById("humidity").innerText=humidity+" %"
 
 let predictionElement=document.getElementById("prediction")
-
-predictionElement.innerText=mlData.prediction
+predictionElement.innerText=prediction
 
 // Color indicator
-if(mlData.prediction==="Safe"){
+if(prediction==="Safe"){
 predictionElement.style.color="#22c55e"
 }
-else if(mlData.prediction==="Moderate"){
+else if(prediction==="Moderate"){
 predictionElement.style.color="#facc15"
 }
 else{
 predictionElement.style.color="#ef4444"
 }
 
-// Update charts
+// Chart update
 labels.push(new Date().toLocaleTimeString())
 
 mq2Data.push(mq2)
@@ -102,15 +96,9 @@ mq7Data.shift()
 mq2Chart.update()
 mq7Chart.update()
 
-}catch(error){
-
-console.log("Error:",error)
-
 }
 
-}
-
-// Refresh every 5 seconds
+// Update every 5 seconds
 setInterval(getData,5000)
 
 getData()

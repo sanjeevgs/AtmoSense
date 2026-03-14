@@ -51,8 +51,9 @@ let response=await fetch(url)
 
 let cloudData=await response.json()
 
-let mq2=parseFloat(cloudData.field1)||0
-let mq7=parseFloat(cloudData.field2)||0
+// Generate random SAFE values for testing
+let mq2 = Math.floor(Math.random() * 80) + 10   // 10 - 90 (Safe range)
+let mq7 = Math.floor(Math.random() * 40) + 5    // 5 - 45 (Safe range)
 
 // Temporary values (until ESP32 sends these)
 let temp=Math.floor(Math.random()*10)+28
